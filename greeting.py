@@ -51,13 +51,33 @@ print("\n")
 
 # TO-DO
 # 2 Create Tkinter GUI for application
-# 5 Save weather to csv file
-# 6 Print weather to console
 
 # Completed
 # 1 Organize into functions and classes
 # 4 Save date and time to csv file
 # 3 Create input form which saves to csv file
 
+# Indefinite Hold
+# 5 Save weather to csv file
+# 6 Print weather to console
+
 # Notes:
 # thisDay and thisTime are assigned at the beginning of the program. Subsequent calls do not update the variable.
+# weather data on Google and weather.com unable to scrape with requests
+# begin implementation of https://openweathermap.org/api
+
+# InImplementingWeatherData
+# 1 Create standalone module to research API key use and establish code structure
+# 1.1 Import API data
+# 1.2 Parse API data
+# 1.3 Display API data
+# 1.4 Save API data
+# 2 Load API Key from external file
+# 2.1 Load key from file
+# 2.2 Add key file to .gitignore
+# 2.3 Generate error if no key found
+# 2.4 Ask for key if no key found - save to file
+# 3 Load location data from external file
+# 3.1 Load location data from external file
+# 3.2 Generate error if no location found
+# 3.3 Ask for location if no location found - save to file
