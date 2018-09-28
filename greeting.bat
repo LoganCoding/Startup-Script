@@ -1,3 +1,3 @@
 @ECHO OFF
-python C:\Users\Code\Desktop\python\scripts\greeting.py %*
+python %~dp0greeting.py %*
 PAUSE
