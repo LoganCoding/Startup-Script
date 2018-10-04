@@ -2,9 +2,10 @@
 import datetime
 import time
 import webbrowser
+import requests
 
 # Declare variables
-webPages = ("https://www.businessinsider.com/","https://www.nytimes.com/","https://www.google.com/search?q=weather")
+webPages = ("https://www.businessinsider.com/","https://www.nytimes.com/")
 # Declare variables dependent on classes
 thisDay = datetime.date.today()
 thisTime = datetime.datetime.now()
@@ -32,15 +33,34 @@ def saveInput(input, filename): # def funct and args
             f.write(i) # write chars to file
         f.write("\n") # write newline to file
 
+# Function opens file and returns contents
+def openFile(filename):
+    with open(filename, "r") as f:
+        output_str = ""
+        for i in f:
+            output_str = output_str + i
+        return output_str
+
 # Function prints information to console/terminal
 def displayContent(): # no args
-    print("\n\n\n    Hello Logan\n\n    Today is " + dayOfWeek() + "\n    " + str(thisDate()) + "\n\n    The Time is " + timeOfDay() + "\n\n") # print Hello, dayOfWeek, thisDate, time of day
+    print("\n\n\n    Hello Logan\n\n    Today is " + dayOfWeek() + "\n    " + str(thisDate()) + "\n\n    The Time is " + timeOfDay() + "\n\n    It is "+str(currentWeather)+" degrees Fahrenheit\n\n") # print Hello, dayOfWeek, thisDate, time of day
 
 # Function opens web pages in default browser
 def openBrowser(url=webPages): # web pages passed through url arg - defaulted object is webPages
     for i in url: # iterate over url list/tuple
         time.sleep(1) # wait one second each iteration
         webbrowser.open_new(i) # open url stored at specific index using default browser
+
+# Function gets weather data for 5576859 using API key, additional arguments refine output
+def weather(API,*args):
+    datalink = requests.get("http://api.openweathermap.org/data/2.5/weather?id=5576859&APPID="+API+"&units=imperial").json()
+    for i in args:
+        datalink = datalink[i]
+    return datalink
+#
+weatherAPI = str(openFile("weatherAPI.csv"))
+currentWeather = weather(weatherAPI,"main","temp")
+saveInput(str(thisTime)+"| "+str(currentWeather)+" F","weatherHistory.csv")
 #
 # Execute functions
 saveInput(thisTime,'day_time.csv') # calls saveInput() to record thisTime to day_time.csv
@@ -51,30 +71,21 @@ print("\n")
 
 # TO-DO
 # 2 Create Tkinter GUI for application
+# 7 Expand weather data
 
 # Completed
 # 1 Organize into functions and classes
 # 4 Save date and time to csv file
 # 3 Create input form which saves to csv file
-
-# Indefinite Hold
 # 5 Save weather to csv file
 # 6 Print weather to console
 
 # Notes:
 # thisDay and thisTime are assigned at the beginning of the program. Subsequent calls do not update the variable.
-# weather data on Google and weather.com unable to scrape with requests
-# begin implementation of https://openweathermap.org/api
+# implementation of https://openweathermap.org/api
 
 # InImplementingWeatherData
-# 1 Create standalone module to research API key use and establish code structure
-# 1.1 Import API data
-# 1.2 Parse API data
-# 1.3 Display API data
-# 1.4 Save API data
 # 2 Load API Key from external file
-# 2.1 Load key from file
-# 2.2 Add key file to .gitignore
 # 2.3 Generate error if no key found
 # 2.4 Ask for key if no key found - save to file
 # 3 Load location data from external file
